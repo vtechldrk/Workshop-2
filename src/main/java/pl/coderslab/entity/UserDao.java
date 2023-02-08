@@ -12,6 +12,8 @@ public class UserDao {
             "SELECT * FROM users WHERE id = ?";
     private static final String UPDATE_USER_QUERY =
             "UPDATE users SET username = ?, email = ?, passwd = ? WHERE id = ?";
+    private static final String DELETE_USER_QUERY =
+            "DELETE FROM users where user_id = ?";
 
     public String hashPassword(String password) {
         return BCrypt.hashpw(password, BCrypt.gensalt());
@@ -71,6 +73,17 @@ public class UserDao {
 
             statement.executeUpdate();
 
+        } catch (SQLException e) {
+            System.out.println("Błąd modyfikacji rekordu." + e.getErrorCode());
+            //e.printStackTrace();
+        }
+    }
+    public void delete(int userId) {
+        try (Connection conn = DbUtil.getConnection()){
+            PreparedStatement statement =
+                    conn.prepareStatement(UPDATE_USER_QUERY);
+            statement.setInt(1, userId);
+            statement.executeUpdate();
         } catch (SQLException e) {
             System.out.println("Błąd modyfikacji rekordu." + e.getErrorCode());
             //e.printStackTrace();
