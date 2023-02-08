@@ -3,6 +3,7 @@ package pl.coderslab.entity;
 import org.mindrot.jbcrypt.BCrypt;
 import pl.coderslab.DbUtil;
 import java.sql.*;
+import java.util.Arrays;
 
 
 public class UserDao {
@@ -89,5 +90,10 @@ public class UserDao {
             //e.printStackTrace();
         }
     }
+    private User[] addToArray(User u, User[] users) {
+        User[] tmpUsers = Arrays.copyOf(users, users.length + 1); // Tworzymy kopię tablicy powiększoną o 1.
+        tmpUsers[users.length] = u; // Dodajemy obiekt na ostatniej pozycji.
+        return tmpUsers; // Zwracamy nową tablicę.
 
+    }
 }
